@@ -1,0 +1,22 @@
+{
+  "name": "three_js_starter",
+  "version": "1.0.0",
+  "description": "Three JS Starter Project",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "parcel index.html",
+    "watch": "parcel watch index.html",
+    "build": "parcel build index.html",
+    "check": "tsc --noEmit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.121.1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  }
+}
