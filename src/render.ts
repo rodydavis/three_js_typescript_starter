@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { VRButton } from "./utils/vrbutton";
 
 const renderer = new THREE.WebGLRenderer({
   antialias: true, // smooth edges
@@ -35,16 +36,6 @@ const mesh = new THREE.Mesh(geometry, material);
 mesh.position.set(0, 0, -1000); //set the view position backwards in space so we can see it
 scene.add(mesh);
 
-//RENDER LOOP
-requestAnimationFrame(render);
-
-function render() {
-  mesh.rotation.x += 0.01;
-  mesh.rotation.y += 0.03;
-  renderer.render(scene, camera);
-  requestAnimationFrame(render);
-}
-
 function resize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -52,5 +43,22 @@ function resize() {
 }
 
 window.addEventListener("resize", resize, false);
+
+//RENDER LOOP
+function render(isXr: boolean) {
+  if (!isXr) {
+    requestAnimationFrame(animate);
+  } else {
+    document.body.appendChild(VRButton.createButton(renderer));
+    renderer.xr.enabled = true;
+    renderer.setAnimationLoop(animate);
+  }
+}
+
+function animate() {
+  mesh.rotation.x += 0.01;
+  mesh.rotation.y += 0.03;
+  renderer.render(scene, camera);
+}
 
 export { render, resize };

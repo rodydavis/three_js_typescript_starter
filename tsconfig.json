@@ -4,5 +4,5 @@
 		"target": "es6",
 		"moduleResolution": "node",
 	},
-	"include": [ "./src/**/*.ts", "src/webgl.ts", "src/index.ts" ],
+	"include": [ "./src/**/*.ts", "src/utils/webgl.ts", "src/index.ts" ],
 }
