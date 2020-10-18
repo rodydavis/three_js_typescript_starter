@@ -4,6 +4,7 @@
 - Typescript
 - Three.JS
 - Example
+- Github Actions
 
 ## Getting Started
 
