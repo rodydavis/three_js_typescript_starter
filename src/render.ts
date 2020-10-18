@@ -1,10 +1,12 @@
 import * as THREE from "three";
 import { VRButton } from "./utils/vrbutton";
 
+var isXrEnabled: boolean = true;
 const renderer = new THREE.WebGLRenderer({
   antialias: true, // smooth edges
   alpha: true, // transparent background
 });
+renderer.xr.enabled = isXrEnabled;
 renderer.setClearColor(0x25c8ce);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -36,6 +38,32 @@ const mesh = new THREE.Mesh(geometry, material);
 mesh.position.set(0, 0, -1000); //set the view position backwards in space so we can see it
 scene.add(mesh);
 
+// Render Scene
+function render(_isXrEnabled: boolean = isXrEnabled) {
+  isXrEnabled = _isXrEnabled;
+  if (isXrEnabled) {
+    document.body.appendChild(VRButton.createButton(renderer));
+    renderer.xr.enabled = true;
+    renderer.setAnimationLoop(animate);
+  } else {
+    requestAnimationFrame(animate);
+  }
+}
+
+// Render Loop
+function animate() {
+  update();
+  renderer.render(scene, camera);
+  if (!isXrEnabled) requestAnimationFrame(animate);
+}
+
+// Called Every Frame
+function update() {
+  mesh.rotation.x += 0.01;
+  mesh.rotation.y += 0.03;
+}
+
+// Called on window resize
 function resize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -43,22 +71,5 @@ function resize() {
 }
 
 window.addEventListener("resize", resize, false);
-
-//RENDER LOOP
-function render(isXr: boolean) {
-  if (!isXr) {
-    requestAnimationFrame(animate);
-  } else {
-    document.body.appendChild(VRButton.createButton(renderer));
-    renderer.xr.enabled = true;
-    renderer.setAnimationLoop(animate);
-  }
-}
-
-function animate() {
-  mesh.rotation.x += 0.01;
-  mesh.rotation.y += 0.03;
-  renderer.render(scene, camera);
-}
 
 export { render, resize };
