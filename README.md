@@ -1,5 +1,7 @@
 # Three.js Starter
 
+Here is a [Live Demo](https://rodydavis.github.io/three_js_typescript_starter/)
+
 - Parcel
 - Typescript
 - Three.JS
