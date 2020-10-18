@@ -18,3 +18,7 @@ Run the project
 ```
 npm run start
 ```
+
+You should see the following:
+
+![](screenshot.png)
